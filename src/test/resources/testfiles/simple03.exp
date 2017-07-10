@@ -1,0 +1,12 @@
+InputLine
+ Braces
+  Num:8
+  Operator:*
+   Num:5
+  Operator:/
+   Braces
+    Num:4
+    Operator:+
+     Num:7
+ Operator:/
+  Num:2
