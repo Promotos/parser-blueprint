@@ -14,7 +14,6 @@ public class CalculatorParser<Type> extends BaseParser<Type> {
 	protected ValueStack<Type> valueStack;
 	protected final BaseRules<Type> baseRules;
 	
-	
 	@SuppressWarnings("unchecked")
 	public CalculatorParser() {
 		match = new Match<Type>();
@@ -61,17 +60,25 @@ public class CalculatorParser<Type> extends BaseParser<Type> {
                         subRule,
                         ACTION(valueStack.build())
                 )
-        );
+        	);
     }
 
     public Rule Atom() {
-        return FirstOf(Number(), SquareRoot(), Parens());
+        return FirstOf(
+        		Number(), 
+        		SquareRoot(), 
+        		Parens()
+        	);
     }
 
     public Rule SquareRoot() {
-        return Sequence("SQRT", Parens() 
-        		//push(new CalcNode('R', pop(), null))
-        		);
+        return Sequence(
+        		"SQRT",
+        		ACTION(match.reset()),
+        		ACTION(valueStack.push(nodeFactory.createSqrt())),
+        		Parens(), 
+        		ACTION(valueStack.build())
+        	);
     }
 
     public Rule Parens() {
@@ -110,6 +117,6 @@ public class CalculatorParser<Type> extends BaseParser<Type> {
         return string.endsWith(" ") ?
                 Sequence(String(string.substring(0, string.length() - 1)), WhiteSpace()) :
                 String(string);
-}
+    }
 	
 }
