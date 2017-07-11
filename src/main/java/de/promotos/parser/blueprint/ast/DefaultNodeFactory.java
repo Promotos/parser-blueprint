@@ -7,6 +7,7 @@ import de.promotos.parser.blueprint.ast.nodes.InputLine;
 import de.promotos.parser.blueprint.ast.nodes.Node;
 import de.promotos.parser.blueprint.ast.nodes.Num;
 import de.promotos.parser.blueprint.ast.nodes.Operator;
+import de.promotos.parser.blueprint.ast.nodes.Sqrt;
 import de.promotos.parser.blueprint.ast.nodes.Braces;
 import de.promotos.parser.blueprint.parser.Match;
 
@@ -33,41 +34,43 @@ public class DefaultNodeFactory extends NodeFactory<Node> {
 
 	@Override
 	public Node createInputLine() {
-		InputLine n = new InputLine();
-		n.setText(match.getMatch());
-		n.setOffset(match.getStartOffset(), match.getEndOffset());		
-		return n;
+		return createWithText(new InputLine());
 	}
 
 	@Override
 	public Node createNumber() {
-		Num n = new Num();
-		n.setText(match.getMatch());
-		n.setOffset(match.getStartOffset(), match.getEndOffset());		
-		return n;
+		return createWithText(new Num());
 	}
 	
 	@Override
 	public Node createDigit() {
-		Digit n = new Digit();
-		n.setText(match.getMatch());
-		n.setOffset(match.getStartOffset(), match.getEndOffset());		
-		return n;
+		return createWithText(new Digit());
 	}
 	
 	@Override
 	public Node createOperator() {
-		Operator n = new Operator();
-		n.setText(match.getMatch());
-		n.setOffset(match.getStartOffset(), match.getEndOffset());		
-		return n;
+		return createWithText(new Operator());
 	}
 
 	@Override
 	public Node createBraces() {
-		Braces n = new Braces();
-		n.setOffset(match.getStartOffset(), match.getEndOffset());		
+		return createEmpty(new Braces());
+	}
+
+	@Override
+	public Node createSqrt() {
+		return createEmpty(new Sqrt());
+	}
+	
+	private Node createEmpty(final Node n) {
+		n.setOffset(match.getStartOffset(), match.getEndOffset());
 		return n;
+	}
+	
+	private Node createWithText(final Node n) {
+		final Node n1 = createEmpty(n);
+		n1.setText(match.getMatch());
+		return n1;
 	}
 	
 }

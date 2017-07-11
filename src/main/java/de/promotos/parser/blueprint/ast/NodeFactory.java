@@ -4,25 +4,27 @@ import java.util.List;
 
 import de.promotos.parser.blueprint.parser.Match;
 
-public abstract class NodeFactory<NodeType> {
+public abstract class NodeFactory<Node> {
 
-	protected Match<NodeType> match;
+	protected Match<Node> match;
 	
-	public NodeFactory(Match<NodeType> match) {
+	public NodeFactory(Match<Node> match) {
 		this.match = match;
 	}
 	
-	public abstract NodeType getDescentMark();
+	public abstract Node getDescentMark();
 
-	public abstract void addChildren(NodeType node, List<NodeType> children);
+	public abstract void addChildren(Node node, List<Node> children);
 		
-	public abstract NodeType createInputLine();
+	public abstract Node createInputLine();
 	
-	public abstract NodeType createNumber();
+	public abstract Node createNumber();
 	
-	public abstract NodeType createDigit();
+	public abstract Node createDigit();
 	
-	public abstract NodeType createOperator();
+	public abstract Node createOperator();
 	
-	public abstract NodeType createBraces();
+	public abstract Node createBraces();
+
+	public abstract Node createSqrt();
 }
